@@ -21,9 +21,9 @@ pipeline {
             stage("docker_scan"){
                     steps{
                         sh '''
-                            docker run -d --name $BUILD_NUMBER arminc/clair-db
+                            docker run -d --name A"$BUILD_NUMBER" arminc/clair-db
                             sleep 15 # wait for db to come up
-                            docker run -p 6060:6060 --link $BUILD_NUMBER:postgres -d --name clair$BUILD_NUMBER arminc/clair-local-scan
+                            docker run -p 6060:6060 --link A$BUILD_NUMBER:postgres -d --name clair$BUILD_NUMBER arminc/clair-local-scan
                             pwd
                             sleep 1
                             DOCKER_GATEWAY=$(docker network inspect bridge --format "{{range .IPAM.Config}}{{.Gateway}}{{end}}")
